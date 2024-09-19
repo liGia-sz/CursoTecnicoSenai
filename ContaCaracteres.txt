@@ -1,0 +1,31 @@
+using System;
+					
+public class Program
+{
+	public static void Main()
+	{
+		// Solicita uma frase e armazena na string 'frase'
+		Console.Write("Digite uma frase: ");
+		string frase = Console.ReadLine();
+		
+		// Solicita a letra que deseja contar:
+		Console.Write("Letra que deseja contar: ");
+		char letra = Console.ReadLine()[0];
+		
+		// Contador para contar as letras A:
+		int contador = 0;
+		
+		// Itera sobre cada letra 'A' da string
+		foreach (char caractere in frase)
+		{
+			// Verifica se o caractere é uma letra 'A':
+			if (caractere == letra)
+			{
+			 contador++;
+			}
+		}
+
+		// SAÍDA		
+		Console.WriteLine($"O texto possui {contador} letras '{letra}'");
+	}
+}

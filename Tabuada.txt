@@ -1,0 +1,19 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+// Solicita um número para gerar uma tabuada:
+        Console.Write("Digite um número para gerar a tabuada: ");
+        int numero = Convert.ToInt32(Console.ReadLine()); //Int e Int32 = são sinônimos, o que difere é que int32 fica mais explícito o 32bits para quem for ler o código. Não afetará em nada você usar ou outro, não haverá impacto no desempenho.
+
+// op : número de entrada do usuário
+// op++: Incrementa o valor da variável em 1.Então, se i é 5, depois de i++, i se torna 6.
+        for (int op = 1; op <= 10; op++)
+        {
+// Saída/Output
+            Console.WriteLine($"{numero} x {op} = {numero * op}");
+        }
+    }
+}

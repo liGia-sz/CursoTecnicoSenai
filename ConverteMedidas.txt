@@ -1,0 +1,36 @@
+using System;
+					
+public class Program
+{
+	public static void Main()
+	{
+		// Entrada 1: distância em metros:
+		Console.WriteLine("Digite uma distância em metros:");
+		// Interpreta o input para a variável 'metro':
+		double metro = double.Parse(Console.ReadLine());
+		// Entrada 2: Unidade de conversão:
+		Console.WriteLine("Informe a medida que deseja converter (cm, km, mi):");
+		// Interpreta input em variável 'medida':
+		string tipoMedida = Console.ReadLine();
+      	//SEMPRE Declare variável para armazenar o resultado
+		double resultado = 0;
+// Switch case para realizar as conversões de acordo com o usuário:
+  switch (tipoMedida)
+		{
+	     case "cm":
+         resultado = metro * 100; 
+        Console.WriteLine(metro + "m" + " = " + resultado + "cm");
+            break;
+            case "km":
+       resultado = metro / 1000;
+       Console.WriteLine(metro + "m" + " = " + resultado + "km");
+            break;
+            case "mi":
+      resultado = metro / 1609.34;
+      Console.WriteLine(metro + "m" + " = " + resultado + "mi");
+ 	       break;
+		}
+		
+		
+ 	}
+}

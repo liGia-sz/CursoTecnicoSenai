@@ -1,0 +1,35 @@
+using System;				
+public class Program
+{
+    public static void Main()
+       {  // Solicita que o usuário insira o salário bruto
+              Console.Write("Informe seu salário bruto: ");
+          // Lê a entrada do usuário e converte para um número decimal
+                if (decimal.TryParse(Console.ReadLine(), out decimal bruto))
+	       {	  
+	          // Variáveis
+		 decimal imposto;
+		 // Calcula imposto com base nas faixas salariais
+	                  if (bruto <= 3000)
+	                   {
+			         imposto = bruto *  0.1m; //"m" pois se trata de um decimal
+		 Console.WriteLine("Pagará:  " + Math.Round (imposto,2) + " de Imposto");
+		       }
+		     else if (bruto <= 6000)
+	                   {
+		         imposto = bruto * 0.15m;
+		Console.WriteLine("Pagará: " +  Math.Round (imposto,2) + " de Imposto de Renda");
+		       }
+		     else if  (bruto >= 6000)
+		      { 
+		          imposto= bruto * 0.2m;
+	               Console.WriteLine("Pagará: " + Math.Round (imposto,2) + " de Imposto de Renda");
+	                    } 	      
+	        } 
+		  else
+		   { 
+	               Console.WriteLine("INVÁLIDO! Tente novamente.");
+		 
+                }
+       }
+  }

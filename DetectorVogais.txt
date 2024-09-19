@@ -1,0 +1,78 @@
+MÉTODO SIMPLES
+using System;
+
+public class Program
+{
+	public static void Main()
+	{
+		// Solicita uma letra e armazena na string 'letra'
+		Console.Write("Digite uma letra: ");
+		char letra = Console.ReadLine()[0];
+                            // Switch case para detectar todas as vogais:
+		switch (letra)
+		{
+			case 'a':// aspas únicas, pois ‘letra’ não é string.
+				Console.WriteLine("VOGAL!");
+				break;
+			case 'e':
+				Console.WriteLine("VOGAL!");
+				break;
+			case 'i':
+				Console.WriteLine("VOGAL!");
+				break;
+			case 'o':
+				Console.WriteLine("VOGAL!");
+				break;
+			case 'u':
+				Console.WriteLine("VOGAL!");
+				break;
+// Caso o input não seja uma vogal:
+		  default:
+                Console.WriteLine("CONSOANTE!");
+                break;
+
+		}
+	}
+}
+
+
+
+USANDO ARRAY
+
+using System;
+public class Program
+{
+	public static void Main()
+	{  
+		// ARRAY que armazena as vogais
+		char[] vogais = {'a', 'e', 'i',  'o', 'u'};
+		
+		// INPUT 
+		Console.WriteLine("DIGITE UMA LETRA QUALQUER:");
+		char letra = char.Parse(Console.ReadLine());
+		Console.WriteLine();
+		
+		// BOOLEANO: Diferencia vogais contidas no array e consoantes
+		bool ehVogal = false;
+		
+		// Verifica se 'letra' está em 'vogais'
+		foreach (char vogal in vogais)
+		{
+		if (letra == vogal)
+		{
+		  ehVogal = true;
+			break; // achou a vogal, a busca para
+		}
+		}
+		// Condicionais diferenciam vogais de consoantes e OUTPUTS
+		if (ehVogal)
+		{
+		Console.WriteLine("É UMA VOGAL!");
+		}
+		else 
+		{
+		 Console.WriteLine("É UMA CONSOANTE!");
+		}
+	}
+}
+

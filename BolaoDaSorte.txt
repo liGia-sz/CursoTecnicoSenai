@@ -1,0 +1,510 @@
+1° FASE: APENAS UM JOGO :
+using System;
+					
+public class Program
+{
+	public static void Main()
+	{
+		// Variáveis que definem o intervalo de números:
+		int min = 10;
+		int max = 60;
+		
+		//Gera números aleatórios entre min e max:
+		Random random = new Random();
+		int num1 = random.Next(min, max + 1);		
+		int num2 = random.Next(min, max + 1);		
+		int num3 = random.Next(min, max + 1);		
+		int num4 = random.Next(min, max + 1);
+		int num5 = random.Next(min, max + 1);
+		int num6 = random.Next(min, max + 1);
+		
+		// Output:
+		Console.WriteLine(num1 + " - " + " " + num2 + " " + " " + " - "+ num3 + " " + " - " + num4 + " " + " - " + num5 + " " + " - " + num6);
+
+	}
+}
+
+
+2° FASE: ESCOLHE A QUANTIDADE DE JOGOS:
+
+using System;
+using System.Collections.Generic; //Fornece coleções mais seguras e eficientes. Permitem trabalhar com tipos de dados específicos sem a necessidade de conversões de tipo.
+
+public class Program
+{
+    public static void Main()
+    {
+        Console.WriteLine("---- BOLÃO DA SORTE! ----");
+        Console.WriteLine("Quantos jogos de 6 dezenas você deseja criar?");
+        int quantJogos = int.Parse(Console.ReadLine());
+
+//Útil quando precisa manter uma coleção de listas, EX: para armazenar vários jogos, onde cada jogo é uma lista de números.
+   List<List<int>> jogos = new List<List<int>>(); //List<T> é uma classe genérica que representa uma lista de objetos.
+											     //List<List<int>> é uma lista de listas de inteiros. 
+
+        for (int i = 0; i < quantJogos; i++)
+        {
+            List<int> jogo = GerarJogo(6);
+            jogos.Add(jogo); //Add é um método da classe List<T> que adiciona um novo item ao final da lista.
+	// inclui novos elementos em uma lista existente.
+            Console.WriteLine($"Jogo {i + 1}: {string.Join(" - ", jogo)}");
+        }
+    }
+
+    private static List<int> GerarJogo(int quantidadeDezenas)//private: Método só pode ser usado dentro da classe onde está definido.
+											// static: Método pertence à classe e não a uma instância específica.
+// List<int>: Tipo de retorno, indicando que o método retornará uma lista de inteiros.
+    {
+        Random random = new Random();
+        HashSet<int> dezenas = new HashSet<int>(); //HashSet<T>: Coleção que armazena valores únicos. 
+		 										// HashSet<int>: Conjunto de inteiros sem duplicatas.
+             // Gera um conjunto de dezenas únicas
+        while (dezenas.Count < quantidadeDezenas) //while: Continua a execução enquanto a condição for verdadeira.
+											// dezenas.Count: Retorna o número de itens no conjunto 'dezenas'. Continua até que o número de itens no conjunto atinja 'quantidadeDezenas'.
+        {
+            dezenas.Add(random.Next(10, 61)); // Números entre 1 e 60
+        }
+
+        // Converte HashSet para uma List para ordenar e exibir os números:
+        List<int> listaDezenas = new List<int>(dezenas); 
+        listaDezenas.Sort(); // Sort ordena os itens da lista em ordem crescente. Facilita a leitura e a verificação, mas pode ser descartada no contexto.
+        return listaDezenas; // return: Envia o resultado de volta para o chamador do método.
+// listaDezenas: Lista de números que foi gerada e ordenada.
+    }
+}
+
+
+3° FASE: ESCOLHE JOGOS E DEZENAS
+
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        // Solicitar o número de jogos
+        Console.Write("Quantos jogos você deseja gerar? ");
+        int quantJogos = int.Parse(Console.ReadLine()); // interpreta input para variável 'quantJogos'.
+
+        // Solicitar o número de dezenas por jogo
+        int quantDez = 0;
+        bool inputV = false; //booleano que pode ser true ou false.
+
+        do // 'DO/WHILE': Valida input caso sejam int:
+        {
+            Console.Write($"Quantas dezenas por jogo (entre 6 e 15)? ");
+            quantDez = int.Parse(Console.ReadLine()); // interpreta input para variável 'quantDez'.
+			
+			// 'IF/ ELSE': Válida caso valor esteja entre 6 e 15:
+            if (quantDez >= 6 && quantDez <= 15) //&&: Não funciona na versão .NET 4.7.2
+            {
+                inputV = true;
+            }
+            else // Caso input não esteja entre 6 e 15:
+            {
+                Console.WriteLine($"APENAS DEZENAS ENTRE 6 E 15");
+            }
+        } while (!inputV); // Fim do loop 'do-while'.
+
+        // Gerar os jogos
+        for (int i = 1; i <= quantJogos; i++)
+        {
+            Console.WriteLine($"Jogo {i}:");
+            GerarJogo(quantDez);
+        }
+    }
+
+    static void GerarJogo(int quantDez) // tornar este método estático simplifica a leitura e a execução do código.
+    {
+        int[] dezenas = new int[quantDez]; // Array 'dezenas' para armazenar as dezenas.
+        Random random = new Random();
+        int contador = 0;
+
+        while (contador < quantDez) // Enquanto contador < quantDez
+        {
+            int numero = random.Next(1, 61); // Supondo que dezenas vão de 1 a 60
+            bool existe = false; // bool será inválido (false)
+            for (int i = 0; i < contador; i++)
+            {
+                if (dezenas[i] == número) 
+                {
+                    existe = true;  // bool será válido (true)
+
+                    break;
+                }
+            }
+
+            if (!existe)
+            {
+                dezenas[contador] = numero;
+                contador++;
+            }
+        }
+
+        // Ordena dezenas
+        for (int i = 0; i < dezenas.Length - 1; i++)
+        {
+            for (int j = i + 1; j < dezenas.Length; j++)
+            {
+                if (dezenas[i] > dezenas[j])
+                {
+                    int temp = dezenas[i];
+                    dezenas[i] = dezenas[j];
+                    dezenas[j] = temp;
+                }
+            }
+        }
+
+        // Exibe as dezenas
+        for (int i = 0; i < dezenas.Length; i++)
+        {
+            Console.Write(dezenas[i]);
+            if (i < dezenas.Length - 1)
+            {
+                Console.Write(" - ");
+            }
+        }
+        Console.WriteLine();
+
+4° Fase: INFORMA DEZENAS
+
+using System;
+
+public class Program
+{
+    public static void Main()
+    {
+       // INPUT 1: Jogos
+        Console.WriteLine("Quantos jogos você deseja criar?");
+        int quantJogos = int.Parse(Console.ReadLine()); // Interpreta INPUT 1 para variável 'quantJogos'
+        
+        int quantDez = 0; 
+        bool inputV = false; // Booleano para validar 'INPUT 2'
+        
+        do // 'DO-WHILE' Valida 'INPUT 2'
+        { // INPUT 2: Dezenas por jogo
+            Console.WriteLine("Quantas dezenas por jogo (Entre 6 e 15)");
+            quantDez = int.Parse(Console.ReadLine());
+            if (quantDez >= 6 && quantDez <= 15) // Caso valor de 'INPUT 2' esteja entre 6 e 15
+            {
+                inputV = true;
+            }
+            else // Caso valor de 'INPUT 2' NÃO esteja entre 6 e 15
+            {
+                Console.WriteLine("TENTE NOVAMENTE! APENAS NÚMEROS ENTRE 6 E 15");
+            }
+        } while (!inputV); // Fim do loop 'DO-WHILE'
+        
+        Random geradorAleatorio = new Random(); // Gera número aleatório
+        
+        for (int numeroDoJogo = 1; numeroDoJogo <= quantJogos; numeroDoJogo++) // Corrigido loop 'FOR'
+        {
+            Console.Write($"Jogo {numeroDoJogo}: ");
+            
+            // Variáveis para armazenar as dezenas
+            int dezena1 = 0, dezena2 = 0, dezena3 = 0, dezena4 = 0, dezena5 = 0;
+            int dezena6 = 0, dezena7 = 0, dezena8 = 0, dezena9 = 0, dezena10 = 0;
+            int dezena11 = 0, dezena12 = 0, dezena13 = 0, dezena14 = 0, dezena15 = 0;
+            
+            int[] dezenas = { dezena1, dezena2, dezena3, dezena4, dezena5, dezena6, dezena7, dezena8, dezena9, dezena10, dezena11, dezena12, dezena13, dezena14, dezena15 };
+            int quantidadeDezenasGeradas = 0;
+
+            while (quantidadeDezenasGeradas < quantDez)
+            {
+                int numeroGerado = geradorAleatorio.Next(1, 61); // Gera um número entre 1 e 60
+                bool numeroUnico = true;
+
+                // Verifica se o número já foi gerado
+                for (int indiceDezena = 0; indiceDezena < dezenas.Length; indiceDezena++)
+                {
+                    if (dezenas[indiceDezena] == numeroGerado)
+                    {
+                        numeroUnico = false;
+                        break;
+                    }
+                }
+                
+                if (numeroUnico)
+                {
+                    dezenas[quantidadeDezenasGeradas] = numeroGerado;
+                    quantidadeDezenasGeradas++;
+                }
+            }
+            
+            // Ordena as dezenas usando a troca de valores (Bubble Sort)
+            for (int posicaoAtual = 0; posicaoAtual < quantDez - 1; posicaoAtual++)
+            {
+                for (int posicaoProxima = 0; posicaoProxima < quantDez - posicaoAtual - 1; posicaoProxima++)
+                {
+                    if (dezenas[posicaoProxima] > dezenas[posicaoProxima + 1])
+                    {
+                        int temp = dezenas[posicaoProxima];
+                        dezenas[posicaoProxima] = dezenas[posicaoProxima + 1];
+                        dezenas[posicaoProxima + 1] = temp;
+                    }
+                }
+            }
+            
+            // OUTPUT: Números Gerados com duas casas decimais
+            for (int indexDezena = 0; indexDezena < quantDez; indexDezena++)
+            {
+                if (indexDezena > 0) Console.Write("-"); // Adiciona separador '-' entre os números
+                Console.Write($"{dezenas[indexDezena]:D2}"); // Exibe cada número com duas casas decimais
+            }
+            
+            Console.WriteLine(); // Pula para a próxima linha após exibir todos os números de cada jogo
+        }
+    }
+}
+
+
+
+	
+
+
+6° e 7° FASE: VALOR E LUCRO SOBRE PRÊMIO
+
+using System;
+
+public class Program
+{
+    public static void Main()
+    {
+        // INPUT 1: Jogos
+		Console.WriteLine("- - - - BOLÃO DA SORTE! - - - -");
+        Console.WriteLine("Quantos jogos você deseja criar?");
+        int quantJogos = int.Parse(Console.ReadLine()); // Interpreta INPUT 1 para variável 'quantJogos'
+        
+        int quantDez = 0; 
+        bool inputV = false; // Booleano para validar 'INPUT 2'
+        
+        do // 'DO-WHILE' Valida 'INPUT 2'
+        { // INPUT 2: Dezenas por jogo
+            Console.WriteLine("Quantas dezenas por jogo (Entre 6 e 15)");
+            quantDez = int.Parse(Console.ReadLine());
+            if (quantDez >= 6 && quantDez <= 15) // Caso valor de 'INPUT 2' esteja entre 6 e 15
+            {
+                inputV = true;
+            }
+            else // Caso valor de 'INPUT 2' NÃO esteja entre 6 e 15
+            {
+                Console.WriteLine("TENTE NOVAMENTE! APENAS NÚMEROS ENTRE 6 E 15");
+            }
+        } while (!inputV); // Fim do loop 'DO-WHILE'
+        
+        // INPUT 3: Valor do prêmio e porcentagem de lucro
+        Console.WriteLine("- Informe o valor do prêmio:");
+        double valorPremio = double.Parse(Console.ReadLine());
+        
+        Random geradorAleatorio = new Random(); // Gera número aleatório
+        
+        for (int numeroDoJogo = 1; numeroDoJogo <= quantJogos; numeroDoJogo++) // Corrigido loop 'FOR'
+        {
+            Console.Write($"- JOGO {numeroDoJogo}: ");
+            
+            // Variáveis para dezenas
+            int dezena1 = 0, dezena2 = 0, dezena3 = 0, dezena4 = 0, dezena5 = 0;
+            int dezena6 = 0, dezena7 = 0, dezena8 = 0, dezena9 = 0, dezena10 = 0;
+            int dezena11 = 0, dezena12 = 0, dezena13 = 0, dezena14 = 0, dezena15 = 0;
+            
+            int[] dezenas = { dezena1, dezena2, dezena3, dezena4, dezena5, dezena6, dezena7, dezena8, dezena9, dezena10, dezena11, dezena12, dezena13, dezena14, dezena15 };
+            int quantDezGeradas = 0;
+
+            while (quantDezGeradas < quantDez)            {
+                int nGerado = geradorAleatorio.Next(1, 61); // Gera um número entre 1 e 60
+                bool nUnico = true;
+
+                // Verifica se o número já foi gerado
+                for (int indiceDezena = 0; indiceDezena < dezenas.Length; indiceDezena++)
+                {
+                    if (dezenas[indiceDezena] == nGerado)
+                    {
+                        nUnico = false;
+                        break;
+                    }
+                }
+                
+                if (nUnico)
+                {// Se o número for único, adiciona-o ao array e incrementa a quantidade de dezenas geradas
+                    dezenas[quantDezGeradas] = nGerado;
+                    quantDezGeradas++;
+                }
+            }
+            
+            // Ordena as dezenas usando a troca de valores 
+            for (int posicaoAtual = 0; posicaoAtual < quantDez - 1; posicaoAtual++)
+            {
+                for (int posicaoProxima = 0; posicaoProxima < quantDez - posicaoAtual - 1; posicaoProxima++)
+                {
+	// Troca os valores se o número atual for maior que o próximo
+                    if (dezenas[posicaoProxima] > dezenas[posicaoProxima + 1])
+                    {
+                        int temp = dezenas[posicaoProxima];
+                        dezenas[posicaoProxima] = dezenas[posicaoProxima + 1];
+                        dezenas[posicaoProxima + 1] = temp;
+                    }
+                }
+            }
+            
+            // OUTPUT 1: Números Gerados com duas casas decimais
+            for (int indexDezena = 0; indexDezena < quantDez; indexDezena++)
+            {
+                if (indexDezena > 0) Console.Write("-"); // Adiciona separador '-' entre os números
+                Console.Write($"{dezenas[indexDezena]:D2}"); // Exibe cada número com duas casas decimais
+            }
+            Console.WriteLine(); // Pula para a próxima linha após exibir todos os números de cada jogo
+			
+			//Variáveis que mostram valor do lucro sob prêmio de cada jogo
+            double lucro6 = valorPremio * 0.75;
+			double lucro5 = valorPremio * 0.15;
+            double lucro4 = valorPremio * 0.10;
+
+            
+            // OUTPUT: Lucro sob cada quantidade de acertos
+            Console.WriteLine($"- - - - SEU LUCRO - - - -");
+			Console.WriteLine();						   
+			Console.WriteLine("Se obteve 6 acertos: R$"+lucro6);                        
+            Console.WriteLine("Se obteve 5 acertos: R$"+lucro5);
+			Console.WriteLine("Se obteve 4 acertos: R$"+lucro4);
+			Console.WriteLine();
+        }
+    }
+}
+
+
+8° FASE: ACERTOS
+
+using System;
+
+public class Program
+{
+    public static void Main()
+    {
+        int quantJogos = 0;
+        bool inputValido = false; // Variável para verificar se a entrada é válida
+        
+        // INPUT 1: Jogos
+        Console.WriteLine("- - - - BOLÃO DA SORTE! - - - -");
+        do
+        {
+            Console.WriteLine("Quantos jogos você deseja criar?");
+            string entradaJogos = Console.ReadLine();
+            // Tenta converter a entrada para um inteiro
+            if (int.TryParse(entradaJogos, out quantJogos) && quantJogos > 0)
+            {
+                inputValido = true; // Se a conversão for bem-sucedida e o número for positivo, a entrada é válida
+            }
+            else
+            {
+                Console.WriteLine("INVÁLIDO! Por favor, tente informar o número novamente.");
+            }
+        } while (!inputValido); // Continua pedindo entrada até obter um número válido
+
+        int quantDez = 0; 
+        inputValido = false; // Resetando a variável para a próxima validação
+        
+        // INPUT 2: Dezenas por jogo
+        do
+        {
+            Console.WriteLine("Quantas dezenas por jogo (Entre 6 e 15)");
+            string entradaDezenas = Console.ReadLine();
+            // Tenta converter a entrada para um inteiro
+            if (int.TryParse(entradaDezenas, out quantDez) && quantDez >= 6 && quantDez <= 15)
+            {
+                inputValido = true; // Se a conversão for bem-sucedida e o número estiver dentro do intervalo, a entrada é válida
+            }
+            else
+            {
+                Console.WriteLine("TENTE NOVAMENTE! APENAS NÚMEROS ENTRE 6 E 15");
+            }
+        } while (!inputValido); // Continua pedindo entrada até obter um número válido
+        
+        // INPUT 3: Valor do prêmio
+        double valorPremio = 0;
+        inputValido = false; // Resetando a variável para a próxima validação
+        
+        do
+        {
+            Console.WriteLine("- Informe o valor do prêmio:");
+            string entradaPremio = Console.ReadLine();
+            // Converte a entrada para double    
+            if (double.TryParse(entradaPremio, out valorPremio) && valorPremio > 0)
+            {
+                inputValido = true; // Se o valor for positivo, a entrada é válida
+            }
+            else
+            {
+                Console.WriteLine("Número inválido! Por favor, tente informar o valor do prêmio novamente.");
+            }
+        } while (!inputValido); // Pede entrada até obter um número válido
+        
+        Random geradorAleatorio = new Random(); // Gera número aleatório
+        
+        for (int numeroDoJogo = 1; numeroDoJogo <= quantJogos; numeroDoJogo++)
+        {
+            Console.Write($"- JOGO {numeroDoJogo}: ");
+            
+            // Inicializa o array de dezenas com zeros
+            int[] dezenas = new int[15];
+            int quantDezGeradas = 0;
+
+            while (quantDezGeradas < quantDez) // Loop para gerar dezenas únicas
+            {
+                int nGerado = geradorAleatorio.Next(1, 61); // Gera um número entre 1 e 60
+                bool nUnico = true;
+
+                // Verifica se o número já foi gerado
+                for (int indiceDezena = 0; indiceDezena < dezenas.Length; indiceDezena++)
+                {
+                    if (dezenas[indiceDezena] == nGerado)
+                    {
+                        nUnico = false;
+                        break;
+                    }
+                }
+                
+                if (nUnico)
+                {
+                    // Se o número for único, adiciona-o ao array e incrementa a quantidade de dezenas geradas
+                    dezenas[quantDezGeradas] = nGerado;
+                    quantDezGeradas++;
+                }
+            }
+            
+            // Ordena as dezenas usando a troca de valores 
+            for (int posicaoAtual = 0; posicaoAtual < quantDez - 1; posicaoAtual++)
+            {
+                for (int posicaoProxima = 0; posicaoProxima < quantDez - posicaoAtual - 1; posicaoProxima++)
+                {
+                    if (dezenas[posicaoProxima] > dezenas[posicaoProxima + 1])
+                    {
+                        int temp = dezenas[posicaoProxima];
+                        dezenas[posicaoProxima] = dezenas[posicaoProxima + 1];
+                        dezenas[posicaoProxima + 1] = temp;
+                    }
+                }
+            }
+            
+            // OUTPUT 1: Números Gerados com duas casas decimais
+            for (int indexDezena = 0; indexDezena < quantDez; indexDezena++)
+            {
+                if (indexDezena > 0) Console.Write("-"); // Adiciona separador '-' entre os números
+                Console.Write($"{dezenas[indexDezena]:D2}"); // Exibe cada número com duas casas decimais
+            }
+            Console.WriteLine(); // Pula para a próxima linha após exibir todos os números do jogo
+            
+           // Variáveis que mostram valor do lucro sob prêmio de cada jogo
+            double lucro6 = valorPremio * 0.75;
+            double lucro5 = valorPremio * 0.15;
+            double lucro4 = valorPremio * 0.10;
+
+      // OUTPUT: Lucro sob cada quantidade de acertos
+            Console.WriteLine($"- - - - SEU LUCRO - - - -");
+            Console.WriteLine();						   
+            Console.WriteLine("Se obteve 6 acertos: R$" + lucro6);                        
+            Console.WriteLine("Se obteve 5 acertos: R$" + lucro5);
+            Console.WriteLine("Se obteve 4 acertos: R$" + lucro4);
+            Console.WriteLine();
+        }
+    }
+}

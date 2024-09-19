@@ -1,0 +1,83 @@
+FUNÇÃO DIRETA:
+
+using System;
+
+public class Program
+{
+	static void Main()
+	{
+// Solicita o Valor a ser convertido:
+		Console.Write("Digite o valor em real: ");
+// Interpreta a entrada e armazena na double ‘valor’:
+		if (double.TryParse(Console.ReadLine(),out double valor))
+		{
+// Realiza os cálculos e imprime os resultados:
+// F2: Força um arredondamento, mostram apenas 2 números após a vírgula:		Console.WriteLine($"O valor convertido para dólar é: {valor/5.48:F2}");
+	     	Console.WriteLine($"O valor convertido para dólar é: {valor/6.09:F2}");
+		Console.WriteLine($"O valor convertido para dólar é: {valor/7.14:F2}");
+		 }
+// Mensagem de Erro:
+		 else
+	             {	
+			Console.WriteLine("NÚMERO INVÁLIDO!");
+		}
+     }							  
+  }
+
+
+
+
+FORNECE ESCOLHA DE MOEDAS:
+
+using System;
+public class Program
+{ 
+	static void Main()
+	{
+// Variáveis:
+		decimal qtdreal, convertidoreal;
+		int op;
+// 1° Entrada do usuário: valor em real:
+		Console.Write("Insira a Quantia que deseja converter:");
+		if (!decimal.TryParse(Console.ReadLine(), out qtdreal) || qtdreal <= 0)
+		{
+// Mensagem de erro 1:
+			Console.WriteLine("Insira uma quantia válida em Real.");
+			return;
+		}
+// 2° Entrada do usuário: moeda conversora:
+		Console.WriteLine("Converter em: 1-Dólar  2-Euro  3-Libras");
+		if (!int.TryParse(Console.ReadLine(), out op) || (op < 1 || op > 3))
+		{
+// Mensagem de erro 2:
+			Console.WriteLine("Opção inválida. Escolha entre 1, 2 ou 3.");
+			return;
+		}
+// Converte Real para Dólar, Euro e Libra
+		switch (op)
+		{
+	case 1:
+		Console.WriteLine("Valor do Dólar: $5,48");
+		qtdreal = decimal.Parse(Console.ReadLine());
+		convertidoreal = qtdreal / 5.48m;
+		Console.WriteLine("A Conversão de R$" + qtdreal + " é: " + "$" + convertidoreal);
+				break;
+		case 2:
+		Console.WriteLine("Valor do Euro: R$ 6,09");
+		qtdreal = decimal.Parse(Console.ReadLine());
+		convertidoreal = qtdreal * 6.09m;
+		Console.WriteLine("A Conversão de R$" + qtdreal + " é: " + "$" + convertidoreal);
+				break;
+	case 3:
+				Console.WriteLine("Valor da Libra: R$ 7,14");
+				qtdreal = decimal.Parse(Console.ReadLine());
+				convertidoreal = qtdreal * 7.14m;
+			Console.WriteLine("A Conversão de R$" + qtdreal + " é: " + "US$" convertidoreal);
+				break;
+			default:
+				// Mensagem de erro:   
+				Console.WriteLine("Opção inválida. Escolha entre 1, 2 ou 3.");
+				break;
+}
+}
+}
