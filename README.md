@@ -21,6 +21,3 @@
 
 **Tabuada:** Código que exibe multiplicações de certo número de 1 a 10.
 
-git add .
-git commit -m "Atividades em C#"
-git push
